@@ -43,7 +43,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ## 💻 Projeto
 
-Sistema para gerenciamento de entrada e saída de movimentações financeiras de tesouraria para Igrejas simples
+Sistema para gerenciamento de entrada e saída de movimentações financeiras simples de tesouraria para Igrejas.
 
 ## 🤔 Como contribuir
 
