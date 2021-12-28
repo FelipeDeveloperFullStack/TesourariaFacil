@@ -58,6 +58,9 @@ Depois que o merge da sua pull request for feito, você pode deletar a sua branc
 
 Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
 
+## Build do projeto
+Para acessar o projeto, [Clique aqui](https://tesouraria-facil.vercel.app/) 
+
 ---
 
 Feito com ♥ by Felipe Miguel DS :wave: [Portfolio](https://felipemiguel.vercel.app/)
