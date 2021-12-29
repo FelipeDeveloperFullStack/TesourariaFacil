@@ -1,45 +1,44 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-//import { Tabl } from '@material-ui/core'
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import { IconButton, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Table } from '@material-ui/core'
+import { Edit as EditIcon, HighlightOff as DeleteIcon } from '@material-ui/icons';
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
+  container: {
+    maxHeight: 340,
+  },
 });
 
-function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
-  return { name, calories, fat, carbs, protein }
+function createData(name: string, description: string, value: string, carbs: number, protein: number) {
+  return { name, description, value, carbs, protein }
 }
 
 const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  createData('Izabella Gonçalves Silveira', 'Dizimo', 'R$ 150,00', 24, 4.0),
+  createData('Anabel Bastos Gabeira', 'Dizimo', 'R$ 200,00', 37, 4.3),
+  createData('Henrique Ferraço Reis', 'Oferta', 'R$ 115,15', 24, 6.0),
+  createData('Valentin Camargo Liberato', 'Dizimo', 'R$ 36,00', 67, 4.3),
+  createData('Melânia Proença Craveiro', 'Oferta', 'R$ 148,60', 49, 3.9),
+  createData('Henrique Ferraço Reis', 'Oferta', 'R$ 115,15', 24, 6.0),
+  createData('Henrique Ferraço Reis', 'Oferta', 'R$ 115,15', 24, 6.0),
+  createData('Izabella Gonçalves Silveira', 'Dizimo', 'R$ 150,00', 24, 4.0),
 ];
 
 export default function DataTable() {
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table" size="small">
+    <TableContainer component={Paper} style={{ margin: '0px 0px 0px 25px' }} className={classes.container}>
+      <Table stickyHeader  className={classes.table} aria-label="simple table" size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>Nome</TableCell>
+            <TableCell align="right">Descrição</TableCell>
+            <TableCell align="right">Valor</TableCell>
+            <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -48,10 +47,12 @@ export default function DataTable() {
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right">{row.description}</TableCell>
+              <TableCell align="right">{row.value}</TableCell>
+              <TableCell align="right">
+                <IconButton size='small'><EditIcon/></IconButton>
+                <IconButton size='small'><DeleteIcon/></IconButton>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
