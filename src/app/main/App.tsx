@@ -38,8 +38,12 @@ const Application: React.FC = () => {
               <div id='saldo' style={{ color: 'blue' }}>R$ 654,14</div>
             </SaldosStyled>
             <SaldosStyled elevation={3}>
-              <div>Saldo atual</div>
+              <div>Total Entrada</div>
               <div id='saldo' style={{ color: 'blue' }}>R$ 765,02</div>
+            </SaldosStyled>
+            <SaldosStyled elevation={3}>
+              <div>Saldo Caixa</div>
+              <div id='saldo' style={{ color: 'green' }}>R$ 765,02</div>
             </SaldosStyled>
           </div>
         </div>

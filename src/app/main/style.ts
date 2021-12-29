@@ -17,7 +17,7 @@ export const Container = styled.main`
     flex-direction: column;
     justify-content: center;
     height: 50px;
-    margin-top: 48px;
+    margin-top: 83px;
     margin-left: -32px;
     width: 138px;
     position: relative;
