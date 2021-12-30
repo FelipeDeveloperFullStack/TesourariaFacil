@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToolBarTop, ToolBarBottom, Entrada } from '../components'
+import { ToolBarTop, ToolBarBottom } from '../components'
 import { CssBaseline } from '@material-ui/core'
 import { Container as ContainerMain, Logo } from './style'
 import tesourariaFacilImage from '../assets/images/tesouraria-facil.png'
