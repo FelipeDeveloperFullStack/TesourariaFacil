@@ -45,3 +45,10 @@ export const SaldosStyled = styled(Paper)({
   marginBottom: '5px',
   flexDirection: 'column'
 })
+
+export const Logo = styled.div`
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: 10px
+`
