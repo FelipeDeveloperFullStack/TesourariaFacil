@@ -11,7 +11,7 @@ const Application: React.FC = () => {
       <ToolBarTop />
         {/* <Entrada/> */}
         <Logo>
-          <img src={tesourariaFacilImage}/>
+          <img alt='Logo' src={tesourariaFacilImage}/>
         </Logo>
       <ToolBarBottom />
     </ContainerMain>
