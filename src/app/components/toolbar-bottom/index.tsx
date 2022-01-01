@@ -1,5 +1,5 @@
 import React from 'react';
-import { Toolbar, Typography, Button } from '@material-ui/core';
+import { Toolbar, Typography } from '@material-ui/core';
 import { LocalHospital as EntradaIcon, 
          IndeterminateCheckBox as SaidaIcon,
          PeopleAlt as MembrosIcon,

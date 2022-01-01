@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Datatable, DialogForm, ButtonMonths } from '..'
 import { Paper as Container, Toolbar, TextField, Button as ButtonMaterialUI } from '@material-ui/core'
 import { LocalAtm as EntradaIconButton } from '@material-ui/icons';
-import { ButtonStyled as Button, SaldosStyled } from '../../main/style'
+import { SaldosStyled } from '../../main/style'
 import { RootState } from '../../state/reducers/combineReducers'
 
 const FinancialMovement: React.FC = (props) => {

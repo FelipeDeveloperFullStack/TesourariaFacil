@@ -1,4 +1,3 @@
-import { IndexInfo } from "typescript"
 import { Action } from '../../actions/types'
 import { ActionType } from '../../action-types'
 
