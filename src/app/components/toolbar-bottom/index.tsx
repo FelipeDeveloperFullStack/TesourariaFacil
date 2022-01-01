@@ -31,7 +31,7 @@ export default function ButtonAppBar() {
           </div>
           {state.applicationControlReducer.direction &&
           <Typography variant="h6" color='inherit' style={{ position: 'relative', right: '10px' }}>
-            {months.filter(month => month.monthNumber === state.financialMovementReducer.month)[0].monthFullName}
+            Mês de {months.filter(month => month.monthNumber === state.financialMovementReducer.month)[0]?.monthFullName}
           </Typography>}
         </Toolbar>
       </AppBarStyled>
