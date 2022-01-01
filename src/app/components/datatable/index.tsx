@@ -1,7 +1,9 @@
 import React from 'react';
+import { useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
-import { IconButton, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Table } from '@material-ui/core'
+import { IconButton, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Table, Tooltip } from '@material-ui/core'
 import { Edit as EditIcon, HighlightOff as DeleteIcon } from '@material-ui/icons';
+import { RootState } from '../../state/reducers/combineReducers'
 
 const useStyles = makeStyles({
   table: {
@@ -28,30 +30,29 @@ const rows = [
 ];
 
 export default function DataTable() {
-  const classes = useStyles();
+  const classes = useStyles()
+  const state = useSelector((state: RootState) => state.applicationControlReducer)
 
   return (
     <TableContainer component={Paper} style={{ margin: '0px 0px 0px 25px' }} className={classes.container}>
       <Table stickyHeader  className={classes.table} aria-label="simple table" size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Nome</TableCell>
-            <TableCell align="right">Descrição</TableCell>
+            {state.direction === 'in' && <TableCell>Nome</TableCell>}
+            <TableCell>Descrição</TableCell>
             <TableCell align="right">Valor</TableCell>
             <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.description}</TableCell>
+          {rows.map((row, index) => (
+            <TableRow key={index}>
+              {state.direction === 'in' && <TableCell component="th" scope="row">{row.name}</TableCell>}
+              <TableCell>{row.description}</TableCell>
               <TableCell align="right">{row.value}</TableCell>
               <TableCell align="right">
-                <IconButton size='small'><EditIcon/></IconButton>
-                <IconButton size='small'><DeleteIcon/></IconButton>
+                <Tooltip title='Editar'><IconButton size='small' color='primary'><EditIcon/></IconButton></Tooltip>
+                <Tooltip title='Excluir'><IconButton size='small' color='secondary'><DeleteIcon/></IconButton></Tooltip>
               </TableCell>
             </TableRow>
           ))}

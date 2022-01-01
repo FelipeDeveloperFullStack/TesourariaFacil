@@ -1,18 +1,25 @@
 import React from 'react';
-import { ToolBarTop, ToolBarBottom } from '../components'
+import { useSelector } from 'react-redux'
+import { ToolBarTop, ToolBarBottom, FinancialMovement } from '../components'
 import { CssBaseline } from '@material-ui/core'
 import { Container as ContainerMain, Logo } from './style'
 import tesourariaFacilImage from '../assets/images/tesouraria-facil.png'
+import { RootState } from '../state/reducers/combineReducers'
 
 const Application: React.FC = () => {
+
+  const state = useSelector((state: RootState) => state.applicationControlReducer)
+
   return (
     <ContainerMain>
       <CssBaseline />
       <ToolBarTop />
-        {/* <Entrada/> */}
+      {state.direction === 'in' && <FinancialMovement />}
+      {state.direction === 'out' && <FinancialMovement />}
+      {!state.direction &&
         <Logo>
-          <img alt='Logo' src={tesourariaFacilImage}/>
-        </Logo>
+          <img alt='Logo' src={tesourariaFacilImage} />
+        </Logo>}
       <ToolBarBottom />
     </ContainerMain>
   )
