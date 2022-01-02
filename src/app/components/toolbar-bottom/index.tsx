@@ -18,6 +18,7 @@ export default function ButtonAppBar() {
   const dispatch = useDispatch()
   const { defineDirection } = bindActionCreators(actionsCreators, dispatch)
   const state = useSelector((state: RootState) => state)
+  const month = months.filter(month => month.monthNumber === state.financialMovementReducer.month)[0]?.monthFullName
 
   return (
     <div className={classes.root}>
@@ -31,7 +32,7 @@ export default function ButtonAppBar() {
           </div>
           {state.applicationControlReducer.direction &&
           <Typography variant="h6" color='inherit' style={{ position: 'relative', right: '10px' }}>
-            Mês de {months.filter(month => month.monthNumber === state.financialMovementReducer.month)[0]?.monthFullName}
+            {month && 'Mês de '+ month}
           </Typography>}
         </Toolbar>
       </AppBarStyled>

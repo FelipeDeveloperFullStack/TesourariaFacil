@@ -1,9 +1,15 @@
 import React from 'react';
-import { Button, Dialog, Typography } from '@material-ui/core';
+import { useSelector } from 'react-redux'
+import { Button, Dialog, TextField } from '@material-ui/core';
 import { DialogActions, DialogContent, DialogTitle } from './components'
 import IDialogProps from './types/IDialogProps'
+import {Save as SaveIcon } from '@material-ui/icons';
+import { RootState } from '../../state/reducers/combineReducers';
 
 export default function DialogMov(props: IDialogProps) {
+
+  const state = useSelector((state: RootState) => state.applicationControlReducer)
+
   return (
     <div>
       <Dialog onClose={() => props.handleClose(false)} aria-labelledby="customized-dialog-title" open={props.open}>
@@ -11,23 +17,16 @@ export default function DialogMov(props: IDialogProps) {
           {props.title}
         </DialogTitle>
         <DialogContent dividers>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-            in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-          </Typography>
-          <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-            lacus vel augue laoreet rutrum faucibus dolor auctor.
-          </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-            scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-            auctor fringilla.
-          </Typography>
+          <div>
+            {state.direction === 'in' && 
+            <TextField size='small' fullWidth label='Nome' variant='outlined' style={{ paddingBottom: '10px' }}/>}
+            <TextField size='small' fullWidth label='Descrição' variant='outlined' style={{ paddingBottom: '10px' }}/>
+            <TextField size='small' fullWidth label='Valor' variant='outlined'/>
+          </div>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={() => props.handleClose(false)} color="primary">
-            Save changes
+          <Button startIcon={<SaveIcon/>} variant='contained' onClick={() => props.handleClose(false)} color="primary" size='small'>
+            Salvar
           </Button>
         </DialogActions>
       </Dialog>
