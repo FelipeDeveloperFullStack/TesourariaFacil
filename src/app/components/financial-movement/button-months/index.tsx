@@ -14,8 +14,12 @@ const ButtonMonths: React.FC = () => {
   const state = useSelector((state: RootState) => state.financialMovementReducer)
 
   useEffect(() => {
-    setMonth(new Date().getMonth() + 1)
+    setMonthInit()
   }, [])
+  
+  const setMonthInit = () => {
+    setMonth(new Date().getMonth() + 1)
+  }
 
   const handleButtonMonth = (month: IButtonMonths) => {
     setMonth(month.monthNumber)
