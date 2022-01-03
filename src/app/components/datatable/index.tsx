@@ -10,8 +10,8 @@ const useStyles = makeStyles({
     minWidth: 650,
   },
   container: {
-    maxHeight: 340,
-  },
+    maxHeight: 360,
+  }
 });
 
 function createData(name: string, description: string, value: string, carbs: number, protein: number) {
