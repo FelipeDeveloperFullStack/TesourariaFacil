@@ -49,6 +49,7 @@ const FormattedInputsReal = ({
       id={name}
       name={name}
       label={label}
+      focused
       value={stateLocal.currencyNumber}
       onChange={handleChange}
       variant="outlined"

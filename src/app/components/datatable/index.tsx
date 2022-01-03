@@ -29,20 +29,40 @@ const rows = [
   createData('Izabella Gonçalves Silveira', 'Dizimo', 'R$ 150,00', 24, 4.0),
 ];
 
+/** d@description This component is only financial movements */
+const TableRowFinancialMovement = () => {
+  const state = useSelector((state: RootState) => state.applicationControlReducer)
+  return (
+    <TableRow>
+      {state.direction === 'in' && <TableCell>Nome</TableCell>}
+      <TableCell>Descrição</TableCell>
+      <TableCell align="right">Valor</TableCell>
+      <TableCell align="right"></TableCell>
+    </TableRow>
+  )
+}
+
+/** d@description This component is only financial movements */
+const Members = (state: any) => {
+  return (
+    <TableRow>
+      <TableCell>Nome completo</TableCell>
+      <TableCell align="right">Telefone</TableCell>
+      <TableCell align="right"></TableCell>
+    </TableRow>
+  )
+}
+
 export default function DataTable() {
   const classes = useStyles()
   const state = useSelector((state: RootState) => state.applicationControlReducer)
 
   return (
     <TableContainer component={Paper} style={{ margin: '0px 0px 0px 25px' }} className={classes.container}>
-      <Table stickyHeader  className={classes.table} aria-label="simple table" size="small">
+      <Table stickyHeader className={classes.table} aria-label="simple table" size="small">
         <TableHead>
-          <TableRow>
-            {state.direction === 'in' && <TableCell>Nome</TableCell>}
-            <TableCell>Descrição</TableCell>
-            <TableCell align="right">Valor</TableCell>
-            <TableCell align="right"></TableCell>
-          </TableRow>
+          {(state.direction === 'in' || state.direction === 'out') && <TableRowFinancialMovement/>}
+          {state.direction === 'members' && <Members/>}
         </TableHead>
         <TableBody>
           {rows.map((row, index) => (
@@ -51,8 +71,8 @@ export default function DataTable() {
               <TableCell>{row.description}</TableCell>
               <TableCell align="right">{row.value}</TableCell>
               <TableCell align="right">
-                <Tooltip title='Editar'><IconButton size='small' color='primary'><EditIcon/></IconButton></Tooltip>
-                <Tooltip title='Excluir'><IconButton size='small' color='secondary'><DeleteIcon/></IconButton></Tooltip>
+                <Tooltip title='Editar'><IconButton size='small' color='primary'><EditIcon /></IconButton></Tooltip>
+                <Tooltip title='Excluir'><IconButton size='small' color='secondary'><DeleteIcon /></IconButton></Tooltip>
               </TableCell>
             </TableRow>
           ))}

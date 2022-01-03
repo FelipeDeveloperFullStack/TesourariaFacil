@@ -12,15 +12,19 @@ export default function ComboBoxAutoComplete(props: IAutoComplete) {
       style={{ width: 420 }}
       loadingText
       freeSolo
+      value={props.value}
+      onChange={(event: any, newValue: string | null) => {
+        props.onChange({ name: newValue })
+      }}
       renderInput={(params) => 
         <TextField 
-          {...params} 
+          {...params}
+          focused 
           label={props.label} 
           variant={props.variant}
           size={props.size}
           fullWidth={props.fullWidth}
           style={props.style}
-          onChange={props.onChange}
           value={props.value}
           name={props.name}
           />

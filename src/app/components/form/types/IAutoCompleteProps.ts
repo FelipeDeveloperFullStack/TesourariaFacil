@@ -7,7 +7,7 @@ interface IAutoCompleteProps {
   size: "small" | "medium" | undefined
   fullWidth: boolean,
   variant: "standard" | "filled" | "outlined" | undefined,
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+  onChange: any
   style: any,
   value: any,
   name: any 

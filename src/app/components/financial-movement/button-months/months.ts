@@ -9,7 +9,7 @@ export const months: IButtonMonths[] = [
   { monthName: 'Jun', monthNumber: 6, monthFullName: 'Junho' },
   { monthName: 'Jul', monthNumber: 7, monthFullName: 'Julho' },
   { monthName: 'Ago', monthNumber: 8, monthFullName: 'Agosto' },
-  { monthName: 'Set', monthNumber: 9, monthFullName: 'Setempo' },
+  { monthName: 'Set', monthNumber: 9, monthFullName: 'Setembro' },
   { monthName: 'Out', monthNumber: 10, monthFullName: 'Outubro' },
   { monthName: 'Nov', monthNumber: 11, monthFullName: 'Novembro' },
   { monthName: 'Dez', monthNumber: 12, monthFullName: 'Dezembro' }

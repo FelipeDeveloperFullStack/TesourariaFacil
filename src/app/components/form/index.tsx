@@ -152,8 +152,8 @@ export default function DialogMov(props: IDialogProps) {
           <div>
             <form autoComplete='off'>
               {stateGlobal.direction === 'in' &&
-                <ComboBoxAutoComplete listData={top100Films} size='small' fullWidth label='Nome' variant='outlined' onChange={handleChange} style={{ paddingBottom: '10px' }} value={stateLocal.name} name='name' />}
-                <TextField size='small' fullWidth label='Descrição' variant='outlined' onChange={handleChange} style={{ paddingBottom: '10px' }} value={stateLocal.description} name='description' />
+                <ComboBoxAutoComplete listData={top100Films} size='small' fullWidth label='Nome' variant='outlined' onChange={setStateLocal} style={{ paddingBottom: '10px' }} value={stateLocal.name} name='name' />}
+                <TextField focused size='small' fullWidth label='Descrição' variant='outlined' onChange={handleChange} style={{ paddingBottom: '10px' }} value={stateLocal.description} name='description' />
                 <CurrencyNumber size='small' fullWidth label='Valor' variant='outlined' onChange={handleChange} value={stateLocal.currencyValue} name='currencyValue' />
             </form>
           </div>

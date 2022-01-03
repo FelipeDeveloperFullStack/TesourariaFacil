@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
-import { ToolBarTop, ToolBarBottom, FinancialMovement } from '../components'
+import { ToolBarTop, ToolBarBottom, FinancialMovement, Member } from '../components'
 import { CssBaseline } from '@material-ui/core'
 import { Container as ContainerMain, Logo } from './style'
 import tesourariaFacilImage from '../assets/images/tesouraria-facil.png'
@@ -16,6 +16,7 @@ const Application: React.FC = () => {
       <ToolBarTop />
       {state.direction === 'in' && <FinancialMovement />}
       {state.direction === 'out' && <FinancialMovement />}
+      {state.direction === 'members' && <Member />}
       {!state.direction &&
         <Logo>
           <img alt='Logo' src={tesourariaFacilImage} />
