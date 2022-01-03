@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react'
+import React from 'react'
 import { ButtonStyled as Button } from '../../../main/style'
 import { useDispatch, useSelector } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -13,13 +13,9 @@ const ButtonMonths: React.FC = () => {
   const { setMonth } = bindActionCreators(actionsCreators, dispatch)
   const state = useSelector((state: RootState) => state.financialMovementReducer)
 
-  useEffect(() => {
-    setMonthInit()
-  }, [])
-  
-  const setMonthInit = () => {
-    setMonth(new Date().getMonth() + 1)
-  }
+  // useEffect(() => {
+  //   setMonth(new Date().getMonth() + 1)
+  // }, [])
 
   const handleButtonMonth = (month: IButtonMonths) => {
     setMonth(month.monthNumber)
