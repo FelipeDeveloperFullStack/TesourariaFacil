@@ -8,7 +8,7 @@ export default function ComboBoxAutoComplete(props: IAutoComplete) {
   return (
     <Autocomplete
       options={props.listData}
-      getOptionLabel={(option) => option.title}
+      getOptionLabel={(option) => option.data}
       style={{ width: 420 }}
       loadingText
       freeSolo
