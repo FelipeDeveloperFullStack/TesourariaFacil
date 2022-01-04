@@ -39,7 +39,7 @@ export default function DialogMov(props: IDialogProps) {
     if (event.target.name === 'name') handleChangeName(event)
     if (event.target.name === 'description') handleChangeDescription(event)
     if (event.target.name === 'currencyValue') handleChangeCurrencyValue(event)
-    if (event.target.name === 'numeroCelular') handleChangePhoneNumber(event)
+    if (event.target.name === 'phoneNumber') handleChangePhoneNumber(event)
   }
 
   const saveData = () => {
@@ -69,7 +69,7 @@ export default function DialogMov(props: IDialogProps) {
               {stateGlobal.direction === 'members' &&
                 <React.Fragment>
                   <TextField focused size='small' fullWidth label='Nome completo' variant='outlined' onChange={handleChange} style={{ paddingBottom: '10px' }} value={stateLocal.name} name='name' />
-                  <TextMaskCel size='small' fullWidth label='Número do celular para contato' variant='outlined' onChange={handleChange} value={stateLocal.phoneNumber} name='numeroCelular' />
+                  <TextMaskCel size='small' fullWidth label='Número do celular para contato' variant='outlined' onChange={handleChange} value={stateLocal.phoneNumber} name='phoneNumber' />
                 </React.Fragment>}
             </form>
           </div>

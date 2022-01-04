@@ -9,8 +9,11 @@ const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
-  container: {
+  containerFinancialMovements: {
     maxHeight: 360,
+  },
+  containerMembers: {
+    maxHeight: 406,
   }
 });
 
@@ -22,6 +25,9 @@ const rows = [
   createData('Izabella Gonçalves Silveira', 'Dizimo', 'R$ 150,00', 24, 4.0),
   createData('Anabel Bastos Gabeira', 'Dizimo', 'R$ 200,00', 37, 4.3),
   createData('Henrique Ferraço Reis', 'Oferta', 'R$ 115,15', 24, 6.0),
+  createData('Valentin Camargo Liberato', 'Dizimo', 'R$ 36,00', 67, 4.3),
+  createData('Valentin Camargo Liberato', 'Dizimo', 'R$ 36,00', 67, 4.3),
+  createData('Valentin Camargo Liberato', 'Dizimo', 'R$ 36,00', 67, 4.3),
   createData('Valentin Camargo Liberato', 'Dizimo', 'R$ 36,00', 67, 4.3),
   createData('Melânia Proença Craveiro', 'Oferta', 'R$ 148,60', 49, 3.9),
   createData('Henrique Ferraço Reis', 'Oferta', 'R$ 115,15', 24, 6.0),
@@ -58,7 +64,7 @@ export default function DataTable() {
   const state = useSelector((state: RootState) => state.applicationControlReducer)
 
   return (
-    <TableContainer component={Paper} style={{ margin: '0px 0px 0px 25px' }} className={classes.container}>
+    <TableContainer component={Paper} style={{ margin: '0px 0px 0px 25px' }} className={state.direction === 'members' ? classes.containerMembers : classes.containerFinancialMovements}>
       <Table stickyHeader className={classes.table} aria-label="simple table" size="small">
         <TableHead>
           {(state.direction === 'in' || state.direction === 'out') && <TableRowFinancialMovement/>}
