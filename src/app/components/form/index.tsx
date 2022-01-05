@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux'
 import { Button, Dialog, TextField } from '@material-ui/core';
 import { DialogActions, DialogContent, DialogTitle, CurrencyNumber, ComboBoxAutoComplete } from './components'
+import apiService from '../../service/api'
 import { TextMaskCel } from '../member/components'
 import IDialogProps from './types/IDialogProps'
 import { Save as SaveIcon } from '@material-ui/icons';
@@ -42,8 +43,17 @@ export default function DialogMov(props: IDialogProps) {
     if (event.target.name === 'phoneNumber') handleChangePhoneNumber(event)
   }
 
-  const saveData = () => {
-    console.log({ data: stateLocal, direction: stateGlobal.direction })
+  const saveData = (direction: string) => {
+    if (direction === 'members') saveMember(direction)
+  }
+
+  const saveMember = (direction: string) => {
+    try {
+      apiService.postApi(direction, { name: stateLocal.name, phone_number: stateLocal.phoneNumber })
+      console.log('Membro adicionado com sucesso!')
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -55,9 +65,9 @@ export default function DialogMov(props: IDialogProps) {
         <DialogContent dividers>
           <div>
             <form autoComplete='off'>
-              {stateGlobal.direction === 'in' && 
+              {stateGlobal.direction === 'in' &&
                 <React.Fragment>
-                  <ComboBoxAutoComplete listData={[]} size='small' fullWidth label='Nome' variant='outlined' onChange={setStateLocal} style={{ paddingBottom: '10px' }} value={stateLocal.name} name='name' />  
+                  <ComboBoxAutoComplete listData={[]} size='small' fullWidth label='Nome' variant='outlined' onChange={setStateLocal} style={{ paddingBottom: '10px' }} value={stateLocal.name} name='name' />
                   <TextField focused size='small' fullWidth label='Descrição' variant='outlined' onChange={handleChange} style={{ paddingBottom: '10px' }} value={stateLocal.description} name='description' />
                   <CurrencyNumber size='small' fullWidth label='Valor' variant='outlined' onChange={handleChange} value={stateLocal.currencyValue} name='currencyValue' />
                 </React.Fragment>}
@@ -75,7 +85,7 @@ export default function DialogMov(props: IDialogProps) {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button startIcon={<SaveIcon />} variant='contained' color="primary" size='small' onClick={saveData}>
+          <Button startIcon={<SaveIcon />} variant='contained' color="primary" size='small' onClick={() => saveData(stateGlobal.direction)}>
             Salvar
           </Button>
         </DialogActions>
