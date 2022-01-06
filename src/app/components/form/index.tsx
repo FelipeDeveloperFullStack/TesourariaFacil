@@ -1,5 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { Button, Dialog, TextField } from '@material-ui/core';
 import { DialogActions, DialogContent, DialogTitle, CurrencyNumber, ComboBoxAutoComplete } from './components'
 import apiService from '../../service/api'
@@ -8,12 +9,15 @@ import IDialogProps from './types/IDialogProps'
 import { Save as SaveIcon } from '@material-ui/icons';
 import { RootState } from '../../state/reducers/combineReducers';
 import { IFormInput } from './types/IFormInputsProps'
+import { actionsCreators } from '../../state'
 
 export default function DialogMov(props: IDialogProps) {
 
+  const dispatch = useDispatch()
   const stateGlobal = useSelector((state: RootState) => state.applicationControlReducer)
   let state: IFormInput = { currencyValue: null, name: null, description: null, phoneNumber: null }
   const [stateLocal, setStateLocal] = React.useState(state)
+  const { setAlertMessage } = bindActionCreators(actionsCreators, dispatch)
 
   /** @description Get currency number type of the user */
   const handleChangeCurrencyValue = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,9 +54,11 @@ export default function DialogMov(props: IDialogProps) {
   const saveMember = (direction: string) => {
     try {
       apiService.postApi(direction, { name: stateLocal.name, phone_number: stateLocal.phoneNumber })
-      console.log('Membro adicionado com sucesso!')
+      setAlertMessage({ open: true, message: 'Membro adicionado com sucesso!', severity: 'success' })
+      props.handleClose(false)
     } catch (error) {
       console.error(error)
+      setAlertMessage({ open: true, message: error.message, severity: 'success' })
     }
   }
 

@@ -1,9 +1,10 @@
 import { combineReducers  } from 'redux'
-import { applicationControlReducer, financialMovementReducer } from './'
+import { applicationControlReducer, financialMovementReducer, alertMessageReducer } from './'
 
 const reducers = combineReducers({
   applicationControlReducer,
-  financialMovementReducer
+  financialMovementReducer,
+  alertMessageReducer
 })
 
 export default reducers
