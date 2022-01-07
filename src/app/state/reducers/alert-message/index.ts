@@ -10,7 +10,7 @@ const INIT_STATE = {
 const alertMessageReducer = (state = INIT_STATE, action: Action) => {
     switch(action.type){
       case ActionType.ALERT_MESSAGE: {
-         return {...state, ...action } 
+         return {...state, ...action.payload } 
       }
       default: {
         return state

@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux'
 import { Datatable, DialogForm, ButtonMonths, Filter, BoxesRight } from '..'
 import { Paper as Container } from '@material-ui/core'
 import { RootState } from '../../state/reducers/combineReducers'
-import { EnumAlertMessage } from '../alert-message/types/EnumAlert'
-import { AlertMessage } from '..'
 
 const FinancialMovement: React.FC = (props) => {
   const [isShowDialogForm, setIsShowDialogForm] = React.useState(false)
@@ -21,11 +19,6 @@ const FinancialMovement: React.FC = (props) => {
         <BoxesRight/>
       </div>
       {isShowDialogForm && <DialogForm open={isShowDialogForm} handleClose={setIsShowDialogForm} title={state.applicationControlReducer.direction === 'in' ? 'Entrada' : 'Saída'} />}
-      {console.log({ state: state.alertMessageReducer})}
-      {(state.alertMessageReducer.open && state.alertMessageReducer.severity === EnumAlertMessage.SUCCESS) && 
-        <AlertMessage 
-            message={state.alertMessageReducer.message} 
-            severity={EnumAlertMessage.SUCCESS} />}
     </Container>
   )
 }

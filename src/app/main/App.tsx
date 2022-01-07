@@ -11,11 +11,6 @@ const Application: React.FC = () => {
 
   const state = useSelector((state: RootState) => state)
 
-  // useEffect(() => {
-  //   setOpen(state.alertMessageReducer.open)
-  //   console.log({ state: state.alertMessageReducer })
-  // }, [state.alertMessageReducer.open])
-
   return (
     <ContainerMain>
       <CssBaseline />
