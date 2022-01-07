@@ -4,8 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { IconButton, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Table, Tooltip } from '@material-ui/core'
 import { Edit as EditIcon, HighlightOff as DeleteIcon } from '@material-ui/icons';
 import { RootState } from '../../state/reducers/combineReducers'
-import ApiService from '../../service/api'
-import { AxiosResponse } from 'axios';
 
 const useStyles = makeStyles({
   table: {
@@ -18,11 +16,6 @@ const useStyles = makeStyles({
     maxHeight: 406,
   }
 });
-
-function createData(name: string, description: string, value: string, carbs: number, protein: number) {
-  return { name, description, value, carbs, protein }
-}
-
 
 /** d@description This component is only financial movements */
 const TableRowFinancialMovement = (props: any) => {
@@ -75,7 +68,7 @@ export default function DataTable() {
   const [rows, setRows] = React.useState([])
   
   /** @description Get the all members data */
-  const getMembers = async () => {
+  const getMembers = () => {
     setRows(state.membersReducer.data)
   }
   React.useEffect(() => {
