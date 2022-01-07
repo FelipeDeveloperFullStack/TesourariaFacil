@@ -72,7 +72,9 @@ export default function DataTable() {
     setRows(state.membersReducer.data)
   }
   React.useEffect(() => {
-    if(state.applicationControlReducer.direction === 'members') getMembers()
+    if(state.applicationControlReducer.direction === 'members') {
+      getMembers()
+    }
   }, [state.membersReducer.data])
   
   return (
