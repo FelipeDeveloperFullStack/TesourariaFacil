@@ -2,6 +2,7 @@ import { Dispatch } from 'redux'
 import { ActionType } from '../action-types'
 import { Action } from '../actions/types'
 import { IAlertMessage as AlertMessage } from '../../../app/components/alert-message/types'
+import { Members } from '../../components/member/types'
 
 export const defineDirection = (direction: any) => {
   return (dispatch: Dispatch<Action>) => {
@@ -26,6 +27,15 @@ export const setAlertMessage = (alertMessage: AlertMessage) => {
     dispatch({
       type: ActionType.ALERT_MESSAGE,
       payload: alertMessage
+    })
+  }
+}
+
+export const setMembers = (members: []) => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.MEMBERS,
+      payload: members
     })
   }
 }

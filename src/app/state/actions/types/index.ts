@@ -1,5 +1,6 @@
 import { ActionType } from '../../action-types'
 import { IAlertMessage as AlertMessage } from '../../../components/alert-message/types'
+import { Members } from '../../../components/member/types'
 interface IDefineDirectionAction {
   type: ActionType.SET_DIRECTION,
   payload: string
@@ -13,4 +14,13 @@ interface IAlertMessage {
   payload: AlertMessage
 }
 
-export type Action = IDefineDirectionAction | IMonthOfTheMovementFinancial | IAlertMessage
+interface IMembers {
+  type: ActionType.MEMBERS,
+  payload: []
+}
+
+export type Action = 
+    IDefineDirectionAction 
+  | IMonthOfTheMovementFinancial 
+  | IAlertMessage 
+  | IMembers

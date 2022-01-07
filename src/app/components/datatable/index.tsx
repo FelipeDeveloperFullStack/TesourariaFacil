@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { IconButton, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Table, Tooltip } from '@material-ui/core'
 import { Edit as EditIcon, HighlightOff as DeleteIcon } from '@material-ui/icons';
 import { RootState } from '../../state/reducers/combineReducers'
+import ApiService from '../../service/api'
+import { AxiosResponse } from 'axios';
 
 const useStyles = makeStyles({
   table: {
@@ -21,26 +23,12 @@ function createData(name: string, description: string, value: string, carbs: num
   return { name, description, value, carbs, protein }
 }
 
-const rows = [
-  createData('Izabella Gonçalves Silveira', 'Dizimo', 'R$ 150,00', 24, 4.0),
-  createData('Anabel Bastos Gabeira', 'Dizimo', 'R$ 200,00', 37, 4.3),
-  createData('Henrique Ferraço Reis', 'Oferta', 'R$ 115,15', 24, 6.0),
-  createData('Valentin Camargo Liberato', 'Dizimo', 'R$ 36,00', 67, 4.3),
-  createData('Valentin Camargo Liberato', 'Dizimo', 'R$ 36,00', 67, 4.3),
-  createData('Valentin Camargo Liberato', 'Dizimo', 'R$ 36,00', 67, 4.3),
-  createData('Valentin Camargo Liberato', 'Dizimo', 'R$ 36,00', 67, 4.3),
-  createData('Melânia Proença Craveiro', 'Oferta', 'R$ 148,60', 49, 3.9),
-  createData('Henrique Ferraço Reis', 'Oferta', 'R$ 115,15', 24, 6.0),
-  createData('Henrique Ferraço Reis', 'Oferta', 'R$ 115,15', 24, 6.0),
-  createData('Izabella Gonçalves Silveira', 'Dizimo', 'R$ 150,00', 24, 4.0),
-];
 
 /** d@description This component is only financial movements */
-const TableRowFinancialMovement = () => {
-  const state = useSelector((state: RootState) => state.applicationControlReducer)
+const TableRowFinancialMovement = (props: any) => {
   return (
     <TableRow>
-      {state.direction === 'in' && <TableCell>Nome</TableCell>}
+      {props.state.direction === 'in' && <TableCell>Nome</TableCell>}
       <TableCell>Descrição</TableCell>
       <TableCell align="right">Valor</TableCell>
       <TableCell align="right"></TableCell>
@@ -48,8 +36,8 @@ const TableRowFinancialMovement = () => {
   )
 }
 
-/** d@description This component is only financial movements */
-const Members = (state: any) => {
+/** d@description This component is only Members */
+const TableRowMembers = () => {
   return (
     <TableRow>
       <TableCell>Nome completo</TableCell>
@@ -59,23 +47,53 @@ const Members = (state: any) => {
   )
 }
 
+/** d@description This component is only financial movements */
+const TableCellFinancialMovement = (props: any) => {
+  return (
+    <React.Fragment>
+      {props.state.direction === 'in' && <TableCell component="th" scope="row">{props.row.name}</TableCell>}
+      <TableCell>{props.row.description}</TableCell>
+      <TableCell align="right">{props.row.value}</TableCell>
+    </React.Fragment>
+  )
+}
+
+/** d@description This component is only Members */
+const TableCellMembers = (props: any) => {
+  return (
+    <React.Fragment>
+      <TableCell>{props.row.name}</TableCell>
+      <TableCell align="right">{props.row.phone_number}</TableCell>
+    </React.Fragment>
+  )
+}
+
 export default function DataTable() {
   const classes = useStyles()
-  const state = useSelector((state: RootState) => state.applicationControlReducer)
-
+  
+  const state = useSelector((state: RootState) => state)
+  const [rows, setRows] = React.useState([])
+  
+  /** @description Get the all members data */
+  const getMembers = async () => {
+    setRows(state.membersReducer.data)
+  }
+  React.useEffect(() => {
+    if(state.applicationControlReducer.direction === 'members') getMembers()
+  }, [state.membersReducer.data])
+  
   return (
-    <TableContainer component={Paper} style={{ margin: '0px 0px 0px 25px' }} className={state.direction === 'members' ? classes.containerMembers : classes.containerFinancialMovements}>
+    <TableContainer component={Paper} style={{ margin: '0px 0px 0px 25px' }} className={state.applicationControlReducer.direction === 'members' ? classes.containerMembers : classes.containerFinancialMovements}>
       <Table stickyHeader className={classes.table} aria-label="simple table" size="small">
         <TableHead>
-          {(state.direction === 'in' || state.direction === 'out') && <TableRowFinancialMovement/>}
-          {state.direction === 'members' && <Members/>}
+          {(state.applicationControlReducer.direction === 'in' || state.applicationControlReducer.direction === 'out') && <TableRowFinancialMovement state={state.applicationControlReducer} />}
+          {state.applicationControlReducer.direction === 'members' && <TableRowMembers />}
         </TableHead>
         <TableBody>
           {rows.map((row, index) => (
             <TableRow key={index}>
-              {state.direction === 'in' && <TableCell component="th" scope="row">{row.name}</TableCell>}
-              <TableCell>{row.description}</TableCell>
-              <TableCell align="right">{row.value}</TableCell>
+              {(state.applicationControlReducer.direction === 'in' || state.applicationControlReducer.direction === 'out') && <TableCellFinancialMovement row={row} state={state.applicationControlReducer} />}
+              {state.applicationControlReducer.direction === 'members' && <TableCellMembers row={row} />}
               <TableCell align="right">
                 <Tooltip title='Editar'><IconButton size='small' color='primary'><EditIcon /></IconButton></Tooltip>
                 <Tooltip title='Excluir'><IconButton size='small' color='secondary'><DeleteIcon /></IconButton></Tooltip>

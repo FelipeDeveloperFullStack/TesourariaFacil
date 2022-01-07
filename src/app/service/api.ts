@@ -1,10 +1,10 @@
-import axios, { AxiosInstance} from 'axios'
+import axios, { AxiosInstance, AxiosResponse } from 'axios'
 
 export default class Api {
 
   /** @description GET */
-  static getApi = async (url: string, data: any): Promise<AxiosInstance> => {
-    return axios.get(`${process.env.REACT_APP_BASE_URL}/${url}`)
+  static getApi = async (url: string): Promise<AxiosResponse> => {
+    return await axios.get(`${process.env.REACT_APP_BASE_URL}/${url}`)
   }
 
   /** @description POST */

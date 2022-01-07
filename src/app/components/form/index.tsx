@@ -5,6 +5,7 @@ import { Button, Dialog, TextField } from '@material-ui/core';
 import { DialogActions, DialogContent, DialogTitle, CurrencyNumber, ComboBoxAutoComplete } from './components'
 import apiService from '../../service/api'
 import { TextMaskCel } from '../member/components'
+import { Members } from '../member/types'
 import IDialogProps from './types/IDialogProps'
 import { Save as SaveIcon } from '@material-ui/icons';
 import { RootState } from '../../state/reducers/combineReducers';
@@ -17,7 +18,7 @@ export default function DialogMov(props: IDialogProps) {
   const stateGlobal = useSelector((state: RootState) => state.applicationControlReducer)
   let state: IFormInput = { currencyValue: null, name: null, description: null, phoneNumber: null }
   const [stateLocal, setStateLocal] = React.useState(state)
-  const { setAlertMessage } = bindActionCreators(actionsCreators, dispatch)
+  const { setAlertMessage, setMembers } = bindActionCreators(actionsCreators, dispatch)
 
   /** @description Get currency number type of the user */
   const handleChangeCurrencyValue = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,11 +52,18 @@ export default function DialogMov(props: IDialogProps) {
     if (direction === 'members') saveMember(direction)
   }
 
+  const listAllDataMembers = async () => {
+    let result = await apiService.getApi('members')
+    let _result = result.data.map((item: Members) => item )
+    setMembers(_result)
+  }
+
   const saveMember = (direction: string) => {
     try {
       apiService.postApi(direction, { name: stateLocal.name, phone_number: stateLocal.phoneNumber })
       setAlertMessage({ open: true, message: 'Membro adicionado com sucesso!', severity: 'success' })
       props.handleClose(false)
+      listAllDataMembers()
     } catch (error) {
       console.error(error)
       setAlertMessage({ open: true, message: error.message, severity: 'success' })
