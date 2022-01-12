@@ -66,17 +66,11 @@ export default function DataTable() {
   
   const state = useSelector((state: RootState) => state)
   const [rows, setRows] = React.useState([])
-  
-  /** @description Get the all members data */
-  const getMembers = () => {
-    setRows(state.membersReducer.data)
-  }
+
   React.useEffect(() => {
-    if(state.applicationControlReducer.direction === 'members') {
-      getMembers()
-    }
+    setRows(state.membersReducer.data)
   }, [state.membersReducer.data])
-  
+    
   return (
     <TableContainer component={Paper} style={{ margin: '0px 0px 0px 25px' }} className={state.applicationControlReducer.direction === 'members' ? classes.containerMembers : classes.containerFinancialMovements}>
       <Table stickyHeader className={classes.table} aria-label="simple table" size="small">
