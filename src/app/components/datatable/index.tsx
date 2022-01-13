@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { IconButton, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Table, Tooltip } from '@material-ui/core'
 import { Edit as EditIcon, HighlightOff as DeleteIcon } from '@material-ui/icons';
 import { RootState } from '../../state/reducers/combineReducers'
+import { Members } from '../../components/member/types'
 
 const useStyles = makeStyles({
   table: {
@@ -65,7 +66,7 @@ export default function DataTable() {
   const classes = useStyles()
   
   const state = useSelector((state: RootState) => state)
-  const [rows, setRows] = React.useState([])
+  const [rows, setRows] = React.useState<Array<Members>>([])
 
   React.useEffect(() => {
     setRows(state.membersReducer.data)

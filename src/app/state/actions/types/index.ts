@@ -16,7 +16,7 @@ interface IAlertMessage {
 
 interface IMembers {
   type: ActionType.MEMBERS,
-  payload: []
+  payload: Array<Members>
 }
 
 export type Action = 
