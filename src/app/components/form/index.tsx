@@ -9,14 +9,23 @@ import { Members } from '../member/types'
 import IDialogProps from './types/IDialogProps'
 import { Save as SaveIcon } from '@material-ui/icons';
 import { RootState } from '../../state/reducers/combineReducers';
-import { IFormInput } from './types/IFormInputsProps'
+//import { IFormInput } from './types/IFormInputsProps'
 import { actionsCreators } from '../../state'
 
 export default function DialogMov(props: IDialogProps) {
 
   const dispatch = useDispatch()
   const stateGlobal = useSelector((state: RootState) => state.applicationControlReducer)
-  let state: IFormInput = { currencyValue: null, name: null, description: null, phoneNumber: null }
+  let state: IDialogProps = {
+      _id: props._id, 
+      currencyValue: props.currencyValue, 
+      name: props.name, 
+      description: props.description, 
+      phoneNumber: props.phoneNumber,
+      open: props.open,
+      handleClose: props.handleClose,
+      title: props.title 
+  }
   const [stateLocal, setStateLocal] = React.useState(state)
   const { setAlertMessage, setMembers } = bindActionCreators(actionsCreators, dispatch)
 
@@ -60,8 +69,13 @@ export default function DialogMov(props: IDialogProps) {
 
   const saveMember = (direction: string) => {
     try {
-      apiService.postApi(direction, { name: stateLocal.name, phone_number: stateLocal.phoneNumber })
-      setAlertMessage({ open: true, message: 'Membro adicionado com sucesso!', severity: 'success' })
+      if(!props._id){
+        apiService.postApi(direction, { name: stateLocal.name, phone_number: stateLocal.phoneNumber })
+        setAlertMessage({ open: true, message: 'Membro adicionado com sucesso!', severity: 'success' })
+      }else{
+        apiService.postApi(direction, { name: stateLocal.name, phone_number: stateLocal.phoneNumber, _id: props._id })
+        setAlertMessage({ open: true, message: 'Membro atualizado com sucesso!', severity: 'success' })
+      }
       props.handleClose(false)
       listAllDataMembers()
     } catch (error) {
