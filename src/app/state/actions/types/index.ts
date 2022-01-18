@@ -30,6 +30,11 @@ interface IFinancialMovementIn {
   payload: Array<IIn>
 }
 
+interface IFilter {
+  type: ActionType.FILTER,
+  payload: boolean
+}
+
 export type Action = 
     IDefineDirectionAction 
   | IMonthOfTheMovementFinancial 
@@ -37,3 +42,4 @@ export type Action =
   | IMembers
   | IFinancialMovementIn
   | IFinancialMovementOut
+  | IFilter

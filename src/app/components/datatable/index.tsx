@@ -82,41 +82,54 @@ export default function DataTable() {
 
   React.useEffect(() => {
     /* eslint-disable */
-    loading()
+     loading()
     /* eslint-disable */
   }, [state.membersReducer.data])
 
   React.useEffect(() => {
     /* eslint-disable */
-    loading()
+     loading()
     /* eslint-disable */
   }, [state.in.data])
 
   React.useEffect(() => {
     /* eslint-disable */
-    loading()
+     loading()
     /* eslint-disable */
   }, [state.out.data])
   
   const loading = async () => {
     if (state.applicationControlReducer.direction === 'members') {
-      let result = await apiService.getApi('members')
-      setRows(result.data)
+      if(!state.filterReducer.isFilter){
+        let result = await apiService.getApi('members')
+        setRows(result.data)
+      }else{
+        setRows(state.membersReducer.data)
+      }
     }
     if (state.applicationControlReducer.direction === 'in') {
-      let result = await apiService.getApi('in')
-      setRows(result.data)
+      if(!state.filterReducer.isFilter){
+        let result = await apiService.getApi('in')
+        setRows(result.data)
+      }else{
+        setRows(state.in.data)
+      }
     }
     if (state.applicationControlReducer.direction === 'out') {
-      let result = await apiService.getApi('out')
-      setRows(result.data)
+      if(!state.filterReducer.isFilter){
+        let result = await apiService.getApi('out')
+        setRows(result.data)
+      }else{
+        setRows(state.out.data)
+      }
     }
     if(!rows.length){
       setStateLocal({ ...stateLocal, loadingMessage: 'Nenhum dado foi encontrado.', isShow: true })
     }
   }
 
-  const edit = (row: Members) => {
+  const edit = (row: any) => {
+    row = {...row, currencyValue: String(row.currencyValue).replace('.','').trim()}
     setDataRow(row)
     setIsShowForm(true)
   }

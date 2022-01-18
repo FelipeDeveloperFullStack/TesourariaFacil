@@ -5,32 +5,30 @@ import { actionsCreators } from '../../state'
 import { Toolbar, TextField, Button } from '@material-ui/core'
 import { LocalAtm as EntradaIconButton } from '@material-ui/icons';
 import { RootState } from '../../state/reducers/combineReducers'
-import { Members } from '../member/types';
 import apiService from '../../service/api'
 
 export default function Filter(props: any) {
   const dispatch = useDispatch()
   const stateGlobal = useSelector((state: RootState) => state)
-  const [stateLocal, setStateLocal] = React.useState({ filterText: '', data: Array<Members>() })
-  const { setMembers } = bindActionCreators(actionsCreators, dispatch)
+  const [stateLocal, setStateLocal] = React.useState({ filterText: '' })
+  const { setMembers, setFilter, setFinancialMovementIn, setFinancialMovementOut } = bindActionCreators(actionsCreators, dispatch)
 
-  const handleFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setStateLocal({ filterText: event.target.value, data: stateLocal.data })
+  const handleFilter = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    setStateLocal({ filterText: event.target.value })
     if(stateGlobal.applicationControlReducer.direction === 'members'){
-      setMembers(stateLocal.data.filter(item => String(item.name).toLowerCase().trim().includes(String(event.target.value).toLowerCase().trim())))
+      let result = await apiService.postApi('members/getDataLike', { name: event.target.value })
+      setFilter(true)
+      setMembers(result.data)
     }
-  }
-
-  React.useEffect(() => {
-    /* eslint-disable */
-    getAllData()
-    /* eslint-disable */
-  },[])
-
-  const getAllData = async () => {
-    if(stateGlobal.applicationControlReducer.direction === 'members'){
-      let result = await apiService.getApi('members')
-      setStateLocal({ ...stateLocal, data: result.data })
+    if(stateGlobal.applicationControlReducer.direction === 'in'){
+      let result = await apiService.postApi('in/getDataLike', { name: event.target.value })
+      setFilter(true)
+      setFinancialMovementIn(result.data)
+    }
+    if(stateGlobal.applicationControlReducer.direction === 'out'){
+      let result = await apiService.postApi('out/getDataLike', { description: event.target.value })
+      setFilter(true)
+      setFinancialMovementOut(result.data)
     }
   }
 

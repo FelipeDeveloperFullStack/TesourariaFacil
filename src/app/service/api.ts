@@ -8,9 +8,9 @@ export default class Api {
   }
 
   /** @description POST */
-  static postApi = async (url: string, data: any): Promise<void> => {
+  static postApi = async (url: string, data: any): Promise<AxiosResponse> => {
     try {
-      axios.post(`${process.env.REACT_APP_BASE_URL}/${url}`, data)
+      return axios.post(`${process.env.REACT_APP_BASE_URL}/${url}`, data)
     } catch (error) {
       throw new Error(error)
     }

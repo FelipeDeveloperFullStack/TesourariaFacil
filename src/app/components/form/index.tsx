@@ -74,12 +74,12 @@ export default function DialogMov(props: IDialogProps) {
         await apiService.postApi(direction, { name: stateLocal.name, phone_number: stateLocal.phoneNumber })
         let result = await apiService.getApi(direction)
         setMembers(result.data)
-        setAlertMessage({ open: true, message: 'Membro adicionado com sucesso!', severity: 'success' })
+        //setAlertMessage({ open: true, message: 'Membro adicionado com sucesso!', severity: 'success' })
       }else{
         await apiService.postApi(direction, { name: stateLocal.name, phone_number: stateLocal.phoneNumber, _id: props._id })
         let result = await apiService.getApi(direction)
         setMembers(result.data)
-        setAlertMessage({ open: true, message: 'Membro atualizado com sucesso!', severity: 'success' })
+        //setAlertMessage({ open: true, message: 'Membro atualizado com sucesso!', severity: 'success' })
       }
       props.handleClose(false)
       listAllDataMembers()
@@ -95,13 +95,13 @@ export default function DialogMov(props: IDialogProps) {
         await apiService.postApi(direction, { description: stateLocal.description, currencyValue: stateLocal.currencyValue, month: financialMovementReducer.month, year: new Date().getFullYear() })
         let result = await apiService.getApi(direction)
         setFinancialMovementOut(result.data)
-        setAlertMessage({ open: true, message: 'Saída adicionada com sucesso!', severity: 'success' })
+        //setAlertMessage({ open: true, message: 'Saída adicionada com sucesso!', severity: 'success' })
         console.log('Saída adicionada com sucesso!')
       }else{
-        await apiService.postApi(direction, { description: stateLocal.description, currencyValue: stateLocal.currencyValue, month: financialMovementReducer.month, _id: props._id, year: new Date().getFullYear() })
+        await apiService.postApi(direction, { description: stateLocal.description, currencyValue: String(stateLocal.currencyValue).replace('R$','').replace(',','.').trim(), month: financialMovementReducer.month, _id: props._id, year: new Date().getFullYear() })
         let result = await apiService.getApi(direction)
         setFinancialMovementOut(result.data)
-        setAlertMessage({ open: true, message: 'Saída atualizada com sucesso!', severity: 'success' })
+        //setAlertMessage({ open: true, message: 'Saída atualizada com sucesso!', severity: 'success' })
         console.log('Saída atualizada com sucesso!')
       }
       props.handleClose(false)
@@ -124,12 +124,12 @@ export default function DialogMov(props: IDialogProps) {
                 <React.Fragment>
                   <ComboBoxAutoComplete listData={[]} size='small' fullWidth label='Nome' variant='outlined' onChange={setStateLocal} style={{ paddingBottom: '10px' }} value={stateLocal.name} name='name' />
                   <TextField focused size='small' fullWidth label='Descrição' variant='outlined' onChange={handleChange} style={{ paddingBottom: '10px' }} value={stateLocal.description} name='description' />
-                  <CurrencyNumber size='small' fullWidth label='Valor' variant='outlined' onChange={handleChange} value={stateLocal.currencyValue} name='currencyValue' />
+                  <CurrencyNumber focused size='small' fullWidth label='Valor' variant='outlined' onChange={handleChange} value={String(stateLocal.currencyValue?.replace("R$","").trim())} name='currencyValue' />
                 </React.Fragment>}
               {applicationControlReducer.direction === 'out' &&
                 <React.Fragment>
                   <TextField focused size='small' fullWidth label='Descrição' variant='outlined' onChange={handleChange} style={{ paddingBottom: '10px' }} value={stateLocal.description} name='description' />
-                  <CurrencyNumber size='small' fullWidth label='Valor' variant='outlined' onChange={handleChange} value={stateLocal.currencyValue} name='currencyValue' />
+                  <CurrencyNumber focused size='small' fullWidth label='Valor' variant='outlined' onChange={handleChange} value={String(stateLocal.currencyValue?.replace("R$","").trim())} name='currencyValue' />
                 </React.Fragment>}
               {applicationControlReducer.direction === 'members' &&
                 <React.Fragment>

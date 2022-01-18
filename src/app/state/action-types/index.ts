@@ -4,5 +4,6 @@ export enum ActionType {
   MEMBERS = 'members',
   MONTH = 'month',
   OUT = 'out',
-  IN = 'in'
+  IN = 'in',
+  FILTER = 'filter'
 }

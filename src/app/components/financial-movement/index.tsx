@@ -10,7 +10,7 @@ import apiService from '../../service/api'
 const FinancialMovement: FunctionComponent = (props) => {
   const [isShowDialogForm, setIsShowDialogForm] = React.useState(false)
   const state = useSelector((state: RootState) => state)
-  const { setFinancialMovementOut, setFinancialMovementIn } = bindActionCreators(actionsCreators, useDispatch())
+  const { setFinancialMovementOut, setFinancialMovementIn, setFilter } = bindActionCreators(actionsCreators, useDispatch())
 
   const getAllData = async () => {
     if (state.applicationControlReducer.direction === 'out') {
@@ -26,6 +26,7 @@ const FinancialMovement: FunctionComponent = (props) => {
   useEffect(() => {
     /* eslint-disable */
     getAllData()
+    setFilter(false)
     /* eslint-disable */
   },[])
 

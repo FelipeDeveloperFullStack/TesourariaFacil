@@ -58,3 +58,12 @@ export const setFinancialMovementIn = (fmIn: Array<IIn>) => {
     })
   }
 }
+
+export const setFilter = (isFilter: boolean) => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.FILTER,
+      payload: isFilter
+    })
+  }
+}

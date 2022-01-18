@@ -4,7 +4,8 @@ import {
     financialMovementReducer, 
     financialMovementOutReducer, 
     financialMovementInReducer, 
-    alertMessageReducer, 
+    alertMessageReducer,
+    filterReducer, 
     membersReducer } from './'
 
 const reducers = combineReducers({
@@ -13,7 +14,8 @@ const reducers = combineReducers({
   out: financialMovementOutReducer,
   in: financialMovementInReducer,
   alertMessageReducer,
-  membersReducer
+  membersReducer,
+  filterReducer
 })
 
 export default reducers
