@@ -5,15 +5,12 @@ import { RootState } from '../../state/reducers/combineReducers'
 import { useSelector } from 'react-redux'
 import { EnumAlertMessage } from '../alert-message/types/EnumAlert'
 import { AlertMessage } from '..'
-import { useAllMembers } from './hooks/useAllMembers'
 
 export default function Member(){
 
   const [isShowDialogForm, setIsShowDialogForm] = React.useState(false)
   const state = useSelector((state: RootState) => state)
     
-  useAllMembers()
-
   return (
     <Container elevation={3} style={{ margin: '6px 8px', height: '90vh', padding: '0px 45px 0px 0px' }}>
       <Filter setIsShowDialogForm={setIsShowDialogForm}/>

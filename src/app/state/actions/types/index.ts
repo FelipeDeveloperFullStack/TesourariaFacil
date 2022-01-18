@@ -1,5 +1,6 @@
 import { ActionType } from '../../action-types'
 import { IAlertMessage as AlertMessage } from '../../../components/alert-message/types'
+import { IOut, IIn } from '../../../components/financial-movement/types' 
 import { Members } from '../../../components/member/types'
 interface IDefineDirectionAction {
   type: ActionType.SET_DIRECTION,
@@ -19,8 +20,20 @@ interface IMembers {
   payload: Array<Members>
 }
 
+interface IFinancialMovementOut {
+  type: ActionType.OUT,
+  payload: Array<IOut>
+}
+
+interface IFinancialMovementIn {
+  type: ActionType.IN,
+  payload: Array<IIn>
+}
+
 export type Action = 
     IDefineDirectionAction 
   | IMonthOfTheMovementFinancial 
   | IAlertMessage 
   | IMembers
+  | IFinancialMovementIn
+  | IFinancialMovementOut

@@ -27,7 +27,7 @@ export default function DialogMov(props: IDialogProps) {
       title: props.title 
   }
   const [stateLocal, setStateLocal] = React.useState(state)
-  const { setAlertMessage, setMembers } = bindActionCreators(actionsCreators, dispatch)
+  const { setAlertMessage, setMembers, setFinancialMovementOut } = bindActionCreators(actionsCreators, dispatch)
 
   /** @description Get currency number type of the user */
   const handleChangeCurrencyValue = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,13 +68,17 @@ export default function DialogMov(props: IDialogProps) {
     setMembers(_result)
   }
 
-  const saveMember = (direction: string) => {
+  const saveMember = async (direction: string) => {
     try {
       if(!props._id){
-        apiService.postApi(direction, { name: stateLocal.name, phone_number: stateLocal.phoneNumber })
+        await apiService.postApi(direction, { name: stateLocal.name, phone_number: stateLocal.phoneNumber })
+        let result = await apiService.getApi(direction)
+        setMembers(result.data)
         setAlertMessage({ open: true, message: 'Membro adicionado com sucesso!', severity: 'success' })
       }else{
-        apiService.postApi(direction, { name: stateLocal.name, phone_number: stateLocal.phoneNumber, _id: props._id })
+        await apiService.postApi(direction, { name: stateLocal.name, phone_number: stateLocal.phoneNumber, _id: props._id })
+        let result = await apiService.getApi(direction)
+        setMembers(result.data)
         setAlertMessage({ open: true, message: 'Membro atualizado com sucesso!', severity: 'success' })
       }
       props.handleClose(false)
@@ -85,14 +89,18 @@ export default function DialogMov(props: IDialogProps) {
     }
   }
 
-  const saveOut = (direction: string) => {
+  const saveOut = async (direction: string) => {
     try {
       if(!props._id){
-        apiService.postApi(direction, { description: stateLocal.description, currencyValue: stateLocal.currencyValue, month: financialMovementReducer.month })
+        await apiService.postApi(direction, { description: stateLocal.description, currencyValue: stateLocal.currencyValue, month: financialMovementReducer.month, year: new Date().getFullYear() })
+        let result = await apiService.getApi(direction)
+        setFinancialMovementOut(result.data)
         setAlertMessage({ open: true, message: 'Saída adicionada com sucesso!', severity: 'success' })
         console.log('Saída adicionada com sucesso!')
       }else{
-        apiService.postApi(direction, { description: stateLocal.description, currencyValue: stateLocal.currencyValue, month: financialMovementReducer.month, _id: props._id })
+        await apiService.postApi(direction, { description: stateLocal.description, currencyValue: stateLocal.currencyValue, month: financialMovementReducer.month, _id: props._id, year: new Date().getFullYear() })
+        let result = await apiService.getApi(direction)
+        setFinancialMovementOut(result.data)
         setAlertMessage({ open: true, message: 'Saída atualizada com sucesso!', severity: 'success' })
         console.log('Saída atualizada com sucesso!')
       }

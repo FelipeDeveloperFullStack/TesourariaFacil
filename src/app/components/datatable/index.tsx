@@ -7,6 +7,7 @@ import { RootState } from '../../state/reducers/combineReducers'
 import { Members } from '../../components/member/types'
 import { DialogForm } from '../../components'
 import { DataRow } from './types'
+import apiService from '../../service/api'
 
 const useStyles = makeStyles({
   table: {
@@ -49,7 +50,7 @@ const TableCellFinancialMovement = (props: any) => {
     <React.Fragment>
       {props.state.direction === 'in' && <TableCell component="th" scope="row">{props.row.name}</TableCell>}
       <TableCell>{props.row.description}</TableCell>
-      <TableCell align="right">{props.row.value}</TableCell>
+      <TableCell align="right">{props.row.currencyValue}</TableCell>
     </React.Fragment>
   )
 }
@@ -70,12 +71,8 @@ export default function DataTable() {
   const state = useSelector((state: RootState) => state)
   const [stateLocal, setStateLocal] = React.useState({ loadingMessage: '', isShow: true })
   const [isShowForm, setIsShowForm] = React.useState(false)
-  const [rows, setRows] = React.useState<Array<Members>>([])
+  const [rows, setRows] = React.useState<Array<any>>([])
   const [dataRow, setDataRow] = React.useState<DataRow>()
-
-  React.useEffect(() => {
-    setRows(state.membersReducer.data)
-  }, [state.membersReducer.data])
 
   React.useEffect(() => {
     /* eslint-disable */
@@ -83,14 +80,40 @@ export default function DataTable() {
     /* eslint-disable */
   }, [])
 
-  const loading = () => {
-    if (!rows.length) {
-     // setStateLocal({ ...stateLocal, loadingMessage: 'Carregando, aguarde...' })
-     setStateLocal({ ...stateLocal, loadingMessage: 'Nenhum dado foi encontrado.', isShow: false })
+  React.useEffect(() => {
+    /* eslint-disable */
+    loading()
+    /* eslint-disable */
+  }, [state.membersReducer.data])
+
+  React.useEffect(() => {
+    /* eslint-disable */
+    loading()
+    /* eslint-disable */
+  }, [state.in.data])
+
+  React.useEffect(() => {
+    /* eslint-disable */
+    loading()
+    /* eslint-disable */
+  }, [state.out.data])
+  
+  const loading = async () => {
+    if (state.applicationControlReducer.direction === 'members') {
+      let result = await apiService.getApi('members')
+      setRows(result.data)
     }
-    // setTimeout(() => {
-    //   setStateLocal({ ...stateLocal, loadingMessage: 'Nenhum dado foi encontrado.', isShow: false })
-    // }, 60000)
+    if (state.applicationControlReducer.direction === 'in') {
+      let result = await apiService.getApi('in')
+      setRows(result.data)
+    }
+    if (state.applicationControlReducer.direction === 'out') {
+      let result = await apiService.getApi('out')
+      setRows(result.data)
+    }
+    if(!rows.length){
+      setStateLocal({ ...stateLocal, loadingMessage: 'Nenhum dado foi encontrado.', isShow: true })
+    }
   }
 
   const edit = (row: Members) => {
@@ -130,6 +153,7 @@ export default function DataTable() {
                           name={dataRow?.name}
                           phoneNumber={dataRow?.phone_number}
                           description={dataRow?.description}
+                          currencyValue={dataRow?.currencyValue}
                           _id={dataRow?._id}
                           handleClose={setIsShowForm} />}
     </TableContainer>
