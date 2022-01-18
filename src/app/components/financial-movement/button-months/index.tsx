@@ -13,9 +13,11 @@ const ButtonMonths: React.FC = () => {
   const { setMonth } = bindActionCreators(actionsCreators, dispatch)
   const state = useSelector((state: RootState) => state.financialMovementReducer)
 
-  // useEffect(() => {
-  //   setMonth(new Date().getMonth() + 1)
-  // }, [])
+  React.useEffect(() => {
+    /* eslint-disable */
+    setMonth(new Date().getMonth() + 1)
+    /* eslint-disable */
+  }, [])
 
   const handleButtonMonth = (month: IButtonMonths) => {
     setMonth(month.monthNumber)

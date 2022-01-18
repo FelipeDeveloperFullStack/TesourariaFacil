@@ -22,7 +22,9 @@ export default function Filter(props: any) {
   }
 
   React.useEffect(() => {
+    /* eslint-disable */
     getAllData()
+    /* eslint-disable */
   },[])
 
   const getAllData = async () => {

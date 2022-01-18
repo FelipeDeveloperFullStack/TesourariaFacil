@@ -15,7 +15,7 @@ import { actionsCreators } from '../../state'
 export default function DialogMov(props: IDialogProps) {
 
   const dispatch = useDispatch()
-  const stateGlobal = useSelector((state: RootState) => state.applicationControlReducer)
+  const { applicationControlReducer, financialMovementReducer } = useSelector((state: RootState) => state)
   let state: IDialogProps = {
       _id: props._id, 
       currencyValue: props.currencyValue, 
@@ -59,6 +59,7 @@ export default function DialogMov(props: IDialogProps) {
 
   const saveData = (direction: string) => {
     if (direction === 'members') saveMember(direction)
+    if (direction === 'out') saveOut(direction)
   }
 
   const listAllDataMembers = async () => {
@@ -84,6 +85,24 @@ export default function DialogMov(props: IDialogProps) {
     }
   }
 
+  const saveOut = (direction: string) => {
+    try {
+      if(!props._id){
+        apiService.postApi(direction, { description: stateLocal.description, currencyValue: stateLocal.currencyValue, month: financialMovementReducer.month })
+        setAlertMessage({ open: true, message: 'Saída adicionada com sucesso!', severity: 'success' })
+        console.log('Saída adicionada com sucesso!')
+      }else{
+        apiService.postApi(direction, { description: stateLocal.description, currencyValue: stateLocal.currencyValue, month: financialMovementReducer.month, _id: props._id })
+        setAlertMessage({ open: true, message: 'Saída atualizada com sucesso!', severity: 'success' })
+        console.log('Saída atualizada com sucesso!')
+      }
+      props.handleClose(false)
+    } catch (error) {
+      console.error(error)
+      setAlertMessage({ open: true, message: error.message, severity: 'success' })
+    }
+  }
+
   return (
     <div>
       <Dialog onClose={() => props.handleClose(false)} aria-labelledby="customized-dialog-title" open={props.open}>
@@ -93,18 +112,18 @@ export default function DialogMov(props: IDialogProps) {
         <DialogContent dividers>
           <div>
             <form autoComplete='off'>
-              {stateGlobal.direction === 'in' &&
+              {applicationControlReducer.direction === 'in' &&
                 <React.Fragment>
                   <ComboBoxAutoComplete listData={[]} size='small' fullWidth label='Nome' variant='outlined' onChange={setStateLocal} style={{ paddingBottom: '10px' }} value={stateLocal.name} name='name' />
                   <TextField focused size='small' fullWidth label='Descrição' variant='outlined' onChange={handleChange} style={{ paddingBottom: '10px' }} value={stateLocal.description} name='description' />
                   <CurrencyNumber size='small' fullWidth label='Valor' variant='outlined' onChange={handleChange} value={stateLocal.currencyValue} name='currencyValue' />
                 </React.Fragment>}
-              {stateGlobal.direction === 'out' &&
+              {applicationControlReducer.direction === 'out' &&
                 <React.Fragment>
                   <TextField focused size='small' fullWidth label='Descrição' variant='outlined' onChange={handleChange} style={{ paddingBottom: '10px' }} value={stateLocal.description} name='description' />
                   <CurrencyNumber size='small' fullWidth label='Valor' variant='outlined' onChange={handleChange} value={stateLocal.currencyValue} name='currencyValue' />
                 </React.Fragment>}
-              {stateGlobal.direction === 'members' &&
+              {applicationControlReducer.direction === 'members' &&
                 <React.Fragment>
                   <TextField focused size='small' fullWidth label='Nome completo' variant='outlined' onChange={handleChange} style={{ paddingBottom: '10px' }} value={stateLocal.name} name='name' />
                   <TextMaskCel size='small' fullWidth label='Número do celular para contato' variant='outlined' onChange={handleChange} value={stateLocal.phoneNumber} name='phoneNumber' />
@@ -113,7 +132,7 @@ export default function DialogMov(props: IDialogProps) {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button startIcon={<SaveIcon />} variant='contained' color="primary" size='small' onClick={() => saveData(stateGlobal.direction)}>
+          <Button startIcon={<SaveIcon />} variant='contained' color="primary" size='small' onClick={() => saveData(applicationControlReducer.direction)}>
             Salvar
           </Button>
         </DialogActions>

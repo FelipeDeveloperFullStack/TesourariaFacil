@@ -78,7 +78,9 @@ export default function DataTable() {
   }, [state.membersReducer.data])
 
   React.useEffect(() => {
+    /* eslint-disable */
     loading()
+    /* eslint-disable */
   }, [])
 
   const loading = () => {
